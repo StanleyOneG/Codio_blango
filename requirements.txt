@@ -1,0 +1,5 @@
+nose
+pinocchio
+coverage
+pylint
+Django
