@@ -28,3 +28,11 @@ def author_details(author, current_user):
         sufix = ""
         
     return format_html('{}{}{}', prefix, name, sufix)
+
+@register.simple_tag
+def row():
+    return format_html('<div class="row">')
+
+@register.simple_tag
+def endrow():
+    return format_html('</div>')
