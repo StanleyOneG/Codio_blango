@@ -19,5 +19,6 @@ from django.urls import path
 
 urlpatterns = [
     path('crow_nest/', admin.site.urls),
-    path('', views.index)
+    path('', views.index),
+    path("post/<slug>/", views.post_detail, name = 'blog-post-detail')
 ]
