@@ -39,7 +39,7 @@ class Post(models.Model):
 class AuthorProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-        related_name='Profile'
+        related_name='profile'
     )
     bio = models.TextField()
     
