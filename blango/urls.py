@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 import debug_toolbar
+import blango_auth.views
 from blog import views
 from django.contrib import admin
 from django.urls import path, include
@@ -22,7 +23,9 @@ from django.conf import settings
 urlpatterns = [
     path('crow_nest/', admin.site.urls),
     path('', views.index),
-    path("post/<slug>/", views.post_detail, name = 'blog-post-detail')
+    path("post/<slug>/", views.post_detail, name = 'blog-post-detail'),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/profile/", blango_auth.views.profile, name='profile'),
 ]
 
 if settings.DEBUG:
