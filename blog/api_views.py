@@ -29,7 +29,7 @@ from blog.api.serializers import PostSerializer
 
 # @csrf_exempt
 @api_view(['GET', 'POST'])
-def post_list(request):
+def post_list(request, format=None):
     if request.method == "GET":
         posts = Post.objects.all()
         # posts_as_dict = [post_to_dict(p) for p in posts]
@@ -58,7 +58,7 @@ def post_list(request):
 
 # @csrf_exempt
 @api_view(['GET', 'PUT', 'DELETE'])
-def post_detail(request, pk):
+def post_detail(request, pk, format=None):
     # post = get_object_or_404(Post, pk=pk)
     
     try:
