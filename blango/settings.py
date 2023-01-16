@@ -53,7 +53,8 @@ class Dev(Configuration):
         'allauth',
         'allauth.account',
         'allauth.socialaccount',
-        'allauth.socialaccount.providers.google'
+        'allauth.socialaccount.providers.google',
+        'rest_framework'
     ]
     
     SITE_ID = 1
@@ -146,7 +147,7 @@ class Dev(Configuration):
     # Internationalization
     # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-    LANGUAGE_CODE = 'en-us'
+    LANGUAGE_CODE = values.Value("en-us")
 
     # TIME_ZONE = 'UTC'
     TIME_ZONE = values.Value('UTC')
