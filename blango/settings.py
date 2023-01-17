@@ -54,7 +54,8 @@ class Dev(Configuration):
         'allauth.account',
         'allauth.socialaccount',
         'allauth.socialaccount.providers.google',
-        'rest_framework'
+        'rest_framework',
+        'rest_framework.authtoken'
     ]
     
     SITE_ID = 1
@@ -227,6 +228,14 @@ class Dev(Configuration):
     ACCOUNT_ACTIVATION_DAYS = 7
     
     # REGISTRATION_OPEN = False
+    
+    REST_FRAMEWORK = {
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "rest_framework.authentication.BasicAuthentication",
+            "rest_framework.authentication.SessionAuthentication",
+            "rest_framework.authentication.TokenAuthentication",
+        ]
+    }
 
 class Prod(Dev):
     
