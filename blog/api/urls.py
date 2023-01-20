@@ -6,7 +6,7 @@ from drf_yasg.views import get_schema_view
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
-from blog.api.views import PostList, PostDetail, UserDetail, TagViewSet
+from blog.api.views import UserDetail, TagViewSet, PostViewSet
 
 router = DefaultRouter()
 router.register('tags', TagViewSet)
@@ -17,13 +17,15 @@ schema_view = get_schema_view(
         default_version="v1",
         description="API for Blango Blog",
     ),
-    url=f"http://127.0.0.1:8000.codio.io/api/v1/",
+    url=f"http://127.0.0.1:8000/api/v1/",
     public=True,
 )
 
+router.register('posts', PostViewSet)
+
 urlpatterns = [
-    path('posts/', PostList.as_view(), name='api_post_list'),
-    path('posts/<int:pk>', PostDetail.as_view(), name='api_post_detail'),
+    # path('posts/', PostList.as_view(), name='api_post_list'),
+    # path('posts/<int:pk>', PostDetail.as_view(), name='api_post_detail'),
     path('users/<str:email>', UserDetail.as_view(), name='api_user_detail')
 ]
 

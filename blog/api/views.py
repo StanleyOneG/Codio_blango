@@ -7,19 +7,32 @@ from blog.api.serializers import (
     PostDetailSerializer, 
     TagSerializer,
 )
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from blog.api.permissions import AuthorModifyOrReadOnly, IsAdminUserForObject
 from blog.models import Post, Tag
 from blango_auth.models import User
 
-class PostList(generics.ListCreateAPIView):
-    authentication_classes = [SessionAuthentication]
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
+
+# class PostList(generics.ListCreateAPIView):
+#     authentication_classes = [SessionAuthentication]
+#     queryset = Post.objects.all()
+#     serializer_class = PostSerializer
     
-class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+# class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostDetailSerializer
+#     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
+    
+    
+class PostViewSet(viewsets.ModelViewSet):
+    permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]    
     queryset = Post.objects.all()
-    serializer_class = PostDetailSerializer
-    permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
+    
+    def get_serializer_class(self):
+        if self.action in ['list', 'create']:
+            return PostSerializer
+        return PostDetailSerializer
     
 class UserDetail(generics.RetrieveAPIView):
     lookup_field = "email"
@@ -29,3 +42,12 @@ class UserDetail(generics.RetrieveAPIView):
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+    
+    @action(methods=['get'], detail=True, name='Posts with the Tag')
+    def posts(self, request, pk=None):
+        tag = self.get_object()
+        post_serializer = PostSerializer(
+            tag.posts, many=True, context={'request': request}
+        )
+        return Response(post_serializer.data)
+    
