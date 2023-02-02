@@ -37,7 +37,9 @@ class TagApiTestCase(LiveServerTestCase):
             self.live_server_url + "/api/v1/token-auth/",
             {"username": "testuser@example.com", "password": "password"},
         )
-        self.client.headers["Authorization"] = "Token " + token_resp.json()["token"]
+        self.client.headers["Authorization"] = (
+            "Token " + token_resp.json()["token"]
+        )
 
         resp = self.client.post(
             self.live_server_url + "/api/v1/tags/", {"value": "tag5"}

@@ -13,7 +13,8 @@ from blog.models import Post
 
 
 class PostApiTestCase(TestCase):
-    """ Test case for Post """
+    """Test case for Post"""
+
     def setUp(self):
         self.u1 = get_user_model().objects.create_user(
             email="test@example.com", password="password"
@@ -62,7 +63,9 @@ class PostApiTestCase(TestCase):
             self.assertEqual(post_obj.summary, post_dict["summary"])
             self.assertEqual(post_obj.content, post_dict["content"])
             self.assertTrue(
-                post_dict["author"].endswith(f"/api/v1/users/{post_obj.author.email}")
+                post_dict["author"].endswith(
+                    f"/api/v1/users/{post_obj.author.email}"
+                )
             )
             self.assertEqual(
                 post_obj.published_at,
@@ -103,4 +106,6 @@ class PostApiTestCase(TestCase):
         self.assertEqual(post.summary, post_dict["summary"])
         self.assertEqual(post.content, post_dict["content"])
         self.assertEqual(post.author, self.u1)
-        self.assertEqual(post.published_at, datetime(2021, 1, 10, 9, 0, 0, tzinfo=UTC))
+        self.assertEqual(
+            post.published_at, datetime(2021, 1, 10, 9, 0, 0, tzinfo=UTC)
+        )
